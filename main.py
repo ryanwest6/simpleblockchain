@@ -25,6 +25,8 @@ def getCommand():
         getInfo()
     elif pc[0] == 'gen':
         genCommand(pc)
+    elif pc[0] == 'change':
+        changeBlockCommand(pc, c)
     elif pc[0] == 'exit' or pc[0] == 'x':
         return 'exit'
 
@@ -37,7 +39,7 @@ def getBlockCommand(pc):
     if len(pc) <= 1:
         return
     try:
-        int(pc[1])
+        f = int(pc[1])
     except Exception:
         if pc[1] == 'last':
             print(bc.get(-1).toStringFull())
@@ -67,6 +69,22 @@ def genCommand(pc):
 
     for i in range(int(pc[1])):
         bc.add('generated at ' + str(time.ctime()))
+
+# Changes a past block's data. This is only used for verifying that the validation
+# function works appropriately, since it should be impossible for obedient nodes
+def changeBlockCommand(pc, c):
+    if len(pc) <= 1:
+        return
+    try:
+        int(pc[1])
+    except Exception:
+        print('Error: not a number')
+        return
+    if int(pc[1]) >= len(bc):
+        print('Error: index out of range')
+        return
+    bc.blocks[int(pc[1])].data = str(c[9:])
+
 
 
 if __name__ == "__main__":

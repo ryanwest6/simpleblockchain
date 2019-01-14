@@ -4,10 +4,9 @@ import random
 
 
 class Block:
-    def __init__(self, index, prevHash, hash, timestamp, nonce, data):
+    def __init__(self, index, prevHash, timestamp, nonce, data):
         self.index = index
         self.prevHash = prevHash #deep copy this?
-        self.hash = hash
         self.timestamp = timestamp,
         self.data = data
         self.nonce = nonce #necessary to keep all hashes unique
@@ -17,25 +16,31 @@ class Block:
 
     def toStringFull(self):
         return 'Block: ' + str(self.index) + \
-               '\nHash: ' + str(self.hash.hexdigest()[:8]) + \
-               '\nPrevious Hash: ' + str(self.prevHash.hexdigest()[:8]) + \
+               '\nHash: ' + str(self.hash())[:8] + \
+               '\nPrevious Hash: ' + str(self.prevHash)[:8] + \
                '\nNonce: ' + str(self.nonce) + \
                '\nData: ' + str(self.data)
     # '\nTimestamp: ' + str(self.timestamp) + \
 
+    # The block's hash is calculated as so: sha256(data + nonce)
+    def hash(self):
+        hashData = str(self.data) + str(self.nonce)
+        return sha256(hashData.encode('utf-8')).hexdigest()
 
+class MerkleRootTree:
+    pass
+    # next steps: figure out how to do the merkle root tree and add validation test 
 
 class Blockchain:
 
     def __init__(self):
         self.blocks = list()
 
+
     def add(self, data):
-        prevHash = sha256('0'.encode('utf-8')) if len(self.blocks) == 0 else self.blocks[-1].hash
+        prevHash = sha256('0'.encode('utf-8')).hexdigest() if len(self.blocks) == 0 else self.blocks[-1].hash()
         nonce = str(random.randint(0, 100000000))
-        hashData = str(data) + str(nonce)
-        hash = sha256(hashData.encode('utf-8'))
-        b = Block(len(self.blocks), prevHash, hash, time.ctime(), nonce, data.encode('utf-8'))
+        b = Block(len(self.blocks), prevHash, time.ctime(), nonce, data.encode('utf-8'))
         self.blocks.append(b)
 
     def get(self, index):
