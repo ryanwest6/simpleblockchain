@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/CloudStation/cs 465/465p1-aes/.idea/465p1-aes.iml" filepath="$USER_HOME$/CloudStation/cs 465/465p1-aes/.idea/465p1-aes.iml" />
+      <module fileurl="file://$USER_HOME$/PycharmProjects/478p1-perceptron/.idea/478p1-perceptron.iml" filepath="$USER_HOME$/PycharmProjects/478p1-perceptron/.idea/478p1-perceptron.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/simplebc.iml" filepath="$PROJECT_DIR$/.idea/simplebc.iml" />
     </modules>
   </component>
